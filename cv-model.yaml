@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: cv-metric-service
+  name: cv-model
 spec:
   containers:
   - name: name
-    image: ghcr.io/anicca-computer-vision-prod/cv-metric-service-prod:master
+    image: ghcr.io/aniccadeveloper/cv_models_prod:docker
     imagePullPolicy: Always
   imagePullSecrets:
   - name: dockerconfigjson-github-com
