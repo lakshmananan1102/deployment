@@ -6,4 +6,4 @@ metadata:
   labels:
     app: app-name
 data:
-  .dockerconfigjson: 
+  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJnaGNyLmlvIjogewoJCQkiYXV0aCI6ICJZVzVwWTJOaFpHVjJaV3h2Y0dWeU9tZG9jRjl0TVdka1pVbDNTbmxZYW00NVIzTnJabTF6ZDB4bE5FcGhiMkZvU0ZNd1JHWnhkM0U9IgoJCX0KCX0KfQ==
