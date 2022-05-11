@@ -1,16 +1,28 @@
 apiVersion: v1
-kind: Pod
+kind: Deployment
 metadata:
   name: front-counter
   labels:
     app: front-counter
+  namespace: visionicca
+  annotations:
+  k8s.v1.cni.cnf.io/networks: '[
+    {
+       "name" : "camera-network",
+       "interface": "eth0",
+       "ips": ["192.168.2.226"]
+    }
+  ]'
 spec:
-  containers:
-    - name: front-counter
-      image: ghcr.io/aniccadeveloper/cv_models_prod:master
-      imagePullPolicy: Always
-      resources:
-        nvidia.com/gpu: 1
+  replicas: 1
+  spec:
+    containers:
+      - name: front-counter
+        image: ghcr.io/aniccadeveloper/cv_models_prod:master
+        imagePullPolicy: Always
+        resources:
+          limits:
+            nvidia.com/gpu: 1
   imagePullSecrets:
   - name: regcred
 
