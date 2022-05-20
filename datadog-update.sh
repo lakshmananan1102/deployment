@@ -302,9 +302,9 @@ fi
 detect_python() {
     if command -v python3; then
         export PYTHON_CMD="python3"
-    elif command -v python2; then
+    elif command -v python3; then
         # FreeBSD apparently uses this
-        export PYTHON_CMD="python2"
+        export PYTHON_CMD="python3"
     else
         export PYTHON_CMD="python"
     fi
