@@ -1,0 +1,28 @@
+version: '3'
+services:
+  dashboard:
+    image: ghcr.io/anicca-computer-vision/computer_vision_dashboard_ui:main
+    ports:
+      - 3000:3000
+
+  metrics:
+    image: ghcr.io/anicca-computer-vision/cv-metric-service:main
+    ports: 
+      - 1125:1125
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./sites-available:/etc/nginx/sites-available
+    command: sudo ln -s /etc/nginx/sites-available/cv-dashboard /etc/nginx/sites-enabled
+    command: sudo ln -s /etc/nginx/sites-available/cv-metric-service /etc/nginx/sites-enabled
+    command: apt update && apt install systemctl && systemctl restart nginx
+    expose:
+      - 80
+    ports:
+      - 80:80
+      - 8081:8080
+    depends_on:
+      - dashboard
+      - metrics
