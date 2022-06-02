@@ -13,8 +13,8 @@
          app: metric-service
      spec:
        containers:
-       - name: 1655-camera-07
-         image: ghcr.io/sidharthram98/metric-deployment:latest
+       - name: front-counter-metric
+         image: ghcr.io/anicca-computer-vision/cv-metric-service:main
        imagePullSecrets:
-       - name: {{SECRETS.NAME}}
+       - name: regcred
 
