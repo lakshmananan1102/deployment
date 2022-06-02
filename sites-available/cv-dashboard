@@ -1,15 +1,11 @@
-upstream cv-dashboard {
-        server localhost:3000;
-}
 
 server {
     listen 80;
-    listen [::]:80;
 
-    server_name visionicca.com;
+    server_name www.visionicca.com visionicca.com;
 
     location / {
-        proxy_pass http://cv-dashboard;
+        proxy_pass http://cv-dashboard:3000;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
