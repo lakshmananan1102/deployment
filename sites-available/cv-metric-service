@@ -1,10 +1,5 @@
-upstream cv-metric-service {
-        server localhost:1125;
-}
-
 server {
     listen 80;
-    listen [::]80;
     server_name metrics.visionicca.com;
 
     location / {
