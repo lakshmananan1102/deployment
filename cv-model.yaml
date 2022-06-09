@@ -16,5 +16,5 @@
        - name: front-counter-metric
          image: ghcr.io/anicca-computer-vision/cv-metric-service:main
        imagePullSecrets:
-       - name: regcred
+       - name: {{SECRETS.NAME}}
 
