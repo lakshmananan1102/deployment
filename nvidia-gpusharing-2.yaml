@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nvidia-mps-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nvidia-mps-server
+  template:
+    metadata:
+      labels:
+        app: nvidia-mps-server
+    spec:
+      hostPID: true
+      hostIPC: true
+      restartPolicy: Always
+      nodeSelector:
+        nvidia.com/gpu.present: "true"
+      containers:
+      - name: cuda-vectoradd
+        image: "nvcr.io/nvidia/cloud-native/k8s-driver-manager:v0.3.0"
+        command:
+        - bash
+        - -c
+        - |
+          nvidia-cuda-mps-control -f
+        env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: "0"
+        - name: CUDA_MPS_PIPE_DIRECTORY
+          value: "/run/nvidia/nvidia-mps"
+        volumeMounts:
+        - mountPath: /run/nvidia
+          mountPropagation: HostToContainer
+          name: nvidia-mps-path
+      volumes:
+      - hostPath:
+          path: /run/nvidia/
+          type: ""
+        name: nvidia-mps-path

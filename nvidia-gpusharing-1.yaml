@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cuda-simple
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cuda-simple
+  template:
+    metadata:
+      labels:
+        app: cuda-simple
+    spec:
+      hostPID: true
+      hostIPC: true
+      restartPolicy: Always
+      nodeSelector:
+        nvidia.com/gpu.present: "true"
+      containers:
+      - name: cuda-vectoradd
+        image: "nvidia/samples:vectoradd-cuda11.2.1"
+        command:
+        - bash
+        - -c
+        - |
+          i=0; while [ \$i -lt 1000 ]; do /tmp/sample; i=\$( expr \$i + 1 ); done
+        env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: "0"
+        - name: CUDA_MPS_PIPE_DIRECTORY
+          value: "/run/nvidia/nvidia-mps"
+        volumeMounts:
+        - mountPath: /run/nvidia
+          mountPropagation: HostToContaine
+          name: nvidia-mps-path
+      volumes:
+      - hostPath:
+          path: /run/nvidia/
+          type: ""
+        name: nvidia-mps-path
