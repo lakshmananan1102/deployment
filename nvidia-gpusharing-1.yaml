@@ -27,7 +27,7 @@ spec:
           value: "/run/nvidia/nvidia-mps"
         volumeMounts:
         - mountPath: /run/nvidia
-          mountPropagation: HostToContaine
+          mountPropagation: HostToContainer
           name: nvidia-mps-path
       volumes:
       - hostPath:
@@ -64,7 +64,7 @@ spec:
           value: "/run/nvidia/nvidia-mps"
         volumeMounts:
         - mountPath: /run/nvidia
-          mountPropagation: HostToContaine
+          mountPropagation: HostToContainer
           name: nvidia-mps-path
       volumes:
       - hostPath:
