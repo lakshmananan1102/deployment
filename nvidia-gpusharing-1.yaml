@@ -19,7 +19,7 @@ spec:
         nvidia.com/gpu.present: "true"
       containers:
       - name: cuda-vectoradd
-        image: "nvidia/samples:vectoradd-cuda11.2.1"
+        image: ghcr.io/anicca-computer-vision-prod/cv_models_prod:master
         command:
         - bash
         - -c
