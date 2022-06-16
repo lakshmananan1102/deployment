@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cv-model-master
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: cuda-simple
@@ -19,7 +19,7 @@ spec:
         nvidia.com/gpu.present: "true"
       containers:
       - name: cuda-master
-        image: ghcr.io/anicca-computer-vision-prod/cv_models_prod:master
+        image: ghcr.io/anicca-computer-vision-prod/cv_models_prod:1655
         env:
         - name: NVIDIA_VISIBLE_DEVICES
           value: "0"
@@ -29,43 +29,8 @@ spec:
         - mountPath: /run/nvidia
           mountPropagation: HostToContainer
           name: nvidia-mps-path
-      volumes:
-      - hostPath:
-          path: /run/nvidia/
-          type: ""
-        name: nvidia-mps-path
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: cv-model-curbside
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: cuda-simple
-  template:
-    metadata:
-      labels:
-        app: cuda-simple
-    spec:
-      hostPID: true
-      hostIPC: true
-      restartPolicy: Always
-      nodeSelector:
-        nvidia.com/gpu.present: "true"
-      containers:
-      - name: cuda-curbside
-        image: ghcr.io/anicca-computer-vision-prod/cv_models_prod:curbside
-        env:
-        - name: NVIDIA_VISIBLE_DEVICES
-          value: "0"
-        - name: CUDA_MPS_PIPE_DIRECTORY
-          value: "/run/nvidia/nvidia-mps"
-        volumeMounts:
-        - mountPath: /run/nvidia
-          mountPropagation: HostToContainer
-          name: nvidia-mps-path
+      imagePullSecrets:
+        - regcred
       volumes:
       - hostPath:
           path: /run/nvidia/
