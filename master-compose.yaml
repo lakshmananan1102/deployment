@@ -1,10 +1,11 @@
-version: 2
+
+version: "3.9"
 services:
   metrics:
-    image: ghcr.io/anicca-computer-vision/cv-metric-service:main
+    image: "ghcr.io/anicca-computer-vision/cv-metric-service:main"
     ports:
-    - 1125:1125
+      - "1125:1125"
   dashboard:
-    image: ghcr.io/anicca-computer-vision/computer_vision_dashboard_ui:main
+    image: "ghcr.io/anicca-computer-vision/computer_vision_dashboard_ui:main"
     ports:
-    - 3000:3000
+      - "3000:3000"
