@@ -1,11 +1,11 @@
-export AKDC_CLUSTER=ch-bradenton-6489
+export AKDC_CLUSTER=store_dir
 export AKDC_REPO=aniccadeveloper/Gitops-pipeline
-export AKDC_PAT=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
+export AKDC_PAT=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
 export AKDC_BRANCH=voe-app
 
 flux bootstrap git \
 --url "https://github.com/$AKDC_REPO" \
---branch main \
+--branch "$AKDC_BRANCH" \
 --password "$AKDC_PAT" \
 --token-auth true \
 --path "./deploy/bootstrap/$AKDC_CLUSTER"
@@ -28,8 +28,6 @@ flux create kustomization bootstrap \
 
 flux create kustomization apps \
 --source GitRepository/gitops \
---path "./deploy/apps/$AKDC_CLUSTER" \
+--path "./deploy/services/$AKDC_CLUSTER" \
 --prune true \
 --interval 1m
-
-flux reconcile source git gitops
