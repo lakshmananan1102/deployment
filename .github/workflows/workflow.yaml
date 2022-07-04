@@ -29,6 +29,7 @@ jobs:
             with open('ingestion-service.yaml') as fp:
               data = yaml.load(fp)
               data["spec"]["template"]["spec"]["containers"][0]["image"] = 'sidharth'
+            with open(r'E:\data\store_file.yaml', 'w') as file:
               yaml.dump(data, sys.stdout)
 
       - name: Git operations
