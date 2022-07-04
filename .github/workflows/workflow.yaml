@@ -35,7 +35,6 @@ jobs:
       - name: Git operations
         run: |
           ls 
-          git checkout voe-app
           cat ingestion-service.yaml
           git config user.name "GitHub Actions Bot"
           git config user.email "sidharth.ram@aniccadata.com"
