@@ -1,6 +1,6 @@
 export AKDC_CLUSTER=store_dir
-export AKDC_REPO=aniccadeveloper/Gitops-pipeline
-export AKDC_PAT=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
+export AKDC_REPO=aniccadeveloper/Cloud-Gitos
+export AKDC_PAT=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
 export AKDC_BRANCH=voe-app
 
 flux bootstrap git \
@@ -28,6 +28,6 @@ flux create kustomization bootstrap \
 
 flux create kustomization apps \
 --source GitRepository/gitops \
---path "./deploy/services/$AKDC_CLUSTER" \
+--path "./deploy/apps/$AKDC_CLUSTER" \
 --prune true \
 --interval 1m
