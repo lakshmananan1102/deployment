@@ -1,41 +1,32 @@
-env:
-  REGISTRY: ghcr.io
-  IMAGE: ${{ github.repository }}
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ingestion-service
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ingestion-service
+  template:
+    metadata:
+      labels:
+        app: ingestion-service
 
-jobs:
-  build-and-push-image:
-      runs-on: ubuntu-latest
-      permissions:
-        contents: read
-        packages: write
-      steps:
-      - name: Make changes to gitops pipeline
-        uses: jannekem/run-python-script-action@v1
-        with:
-          script: |
-            import os
-            import yaml
-            with open("deploy/apps/base/ingestion-service.yaml","r+") as f:
-              y = yaml.load(f,Loader=yaml.FullLoader)
-              y["spec"]["template"]["spec"]["containers"][0]["image"] = '${{ env.REGISTRY }}/${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}'
-              yaml.dump(y)
-              print(y)
-
-      - name: Git operations
-              uses: actions/checkout@v3
-              with:
-                script: | 
-                  ls 
-                  git checkout voe-app
-                  cat deploy/apps/base/ingestion-service.yaml
-                  git config user.name "GitHub Actions Bot"
-                  git config user.email "sidharth.ram@aniccadata.com"
-                  git add deploy/apps/base/ingestion-service.yaml && git commit -m "auto deployment enabled.."
-                  git push origin voe-app
-                
+    spec:
+      containers:
+      - name: ingestion-service
+        image: ghcr.io/anicca-computer-vision/cv-active-metric-db-ingestion:master
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: config-volume
+          mountPath: /home/config
+          
+      volumes:
+        - name: config-volume
+          configMap:
+            name: configmap
+            
+      imagePullSecrets:
+      - name: regcred
