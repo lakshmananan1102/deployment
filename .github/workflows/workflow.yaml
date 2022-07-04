@@ -33,15 +33,13 @@ jobs:
               print(y)
 
       - name: Git operations
-        uses: actions/checkout@v3
-        with:
-          script: | 
-            ls 
-            git checkout voe-app
-            cat ingestion-service.yaml
-            git config user.name "GitHub Actions Bot"
-            git config user.email "sidharth.ram@aniccadata.com"
-            git add ingestion-service.yaml && git commit -m "auto deployment enabled.."
-            git push origin voe-app
-                
-        
+        run: |
+          ls 
+          git checkout voe-app
+          cat ingestion-service.yaml
+          git config user.name "GitHub Actions Bot"
+          git config user.email "sidharth.ram@aniccadata.com"
+          git add ingestion-service.yaml && git commit -m "auto deployment enabled.."
+          git push origin voe-app
+              
+      
