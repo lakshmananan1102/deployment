@@ -24,7 +24,7 @@ jobs:
         uses: jannekem/run-python-script-action@v1
         with:
           script: |
-            import os
+            import sys
             import yaml
             with open('ingestion-service.yaml') as fp:
               data = yaml.load(fp)
