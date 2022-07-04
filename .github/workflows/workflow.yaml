@@ -26,7 +26,7 @@ jobs:
           script: |
             import os
             import yaml
-            with open("ingestion-service.yaml","r+") as f:
+            with open("ingestion-service.yaml","w") as f:
               y = yaml.load(f,Loader=yaml.FullLoader)
               y["spec"]["template"]["spec"]["containers"][0]["image"] = '${{ env.REGISTRY }}/${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}'
               yaml.dump(y)
