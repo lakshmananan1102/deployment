@@ -26,11 +26,10 @@ jobs:
           script: |
             import os
             import yaml
-            with open("ingestion-service.yaml","rw") as f:
-              y = yaml.load(f,Loader=yaml.FullLoader)
-              y["spec"]["template"]["spec"]["containers"][0]["image"] = '${{ env.REGISTRY }}/${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}'
-              yaml.dump(y)
-              print(y)
+            with open('ingestion-service.yaml') as fp:
+              data = yaml.load(fp)
+              data["spec"]["template"]["spec"]["containers"][0]["image"] = 'sidharth'
+              yaml.dump(data, sys.stdout)
 
       - name: Git operations
         run: |
