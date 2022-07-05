@@ -35,10 +35,10 @@ spec:
       imagePullSecrets:
       - name: regcred
       volumes:
-      - hostPath:
+      - name: nvidia-mps-path
+        hostPath:
           path: /run/nvidia/
           type: ""
-        name: nvidia-mps-path
       - name: config-volume
         configMap:
           name: configmap
