@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cv-model-master
+  name: cv-model-master-2
 spec:
   replicas: 1
   selector:
@@ -19,7 +19,7 @@ spec:
         nvidia.com/gpu.present: "true"
       containers:
       - name: cuda-master
-        image: ghcr.io/anicca-computer-vision-prod/cv_models_prod:1655
+        image: ghcr.io/anicca-computer-vision-prod/cv_models_prod:nsn6489
         env:
         - name: NVIDIA_VISIBLE_DEVICES
           value: "0"
@@ -30,7 +30,7 @@ spec:
           mountPropagation: HostToContainer
           name: nvidia-mps-path
       imagePullSecrets:
-        - regcred
+        - name: regcred
       volumes:
       - hostPath:
           path: /run/nvidia/
