@@ -18,7 +18,7 @@
      spec:
        containers:
        - name: ingestion-service
-         image: ghcr.io/anicca-computer-vision/cv-metrics-service:master
+         image: ghcr.io/anicca-computer-vision/cv-metric-service:main
          imagePullPolicy: Always
              
        imagePullSecrets:
