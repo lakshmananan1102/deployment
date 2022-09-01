@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: metrics-service
+spec:
+  selector:
+    app.kubernetes.io/name: metrics-service
+  ports:
+    - protocol: TCP
+      port: 1125
+      targetPort: 1125
