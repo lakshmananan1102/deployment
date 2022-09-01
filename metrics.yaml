@@ -1,0 +1,25 @@
+
+
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: metrics-service
+   namespace: default
+ spec:
+   replicas: 2
+   selector:
+     matchLabels:
+       app: metrics-service
+   template:
+     metadata:
+       labels:
+         app: metrics-service
+
+     spec:
+       containers:
+       - name: ingestion-service
+         image: ghcr.io/anicca-computer-vision/cv-metrics-service:master
+         imagePullPolicy: Always
+             
+       imagePullSecrets:
+       - name: regcred
