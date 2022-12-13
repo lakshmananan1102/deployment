@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bert-qa
+  labels:
+    app: triton-server
+spec:
+  selector:
+    matchLabels:
+      app: triton-server
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: triton-server
+    spec:
+      volumes:
+      - name: model-repo
+        persistentVolumeClaim:
+          claimName: cv-model
+      containers:
+      - name: serving
+        image: docker pull nvcr.io/nvidia/tritonserver:20.08-py3
+        ports:
+        - name: grpc
+          containerPort: 8001
+        - name: http
+          containerPort: 8000
+        - name: metrics
+          containerPort: 8002
+        volumeMounts:
+        - name: model-repo
+          mountPath: "/models"
+        env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: "0"
+        - name: CUDA_MPS_PIPE_DIRECTORY
+          value: "/run/nvidia/nvidia-mps"
+        volumeMounts:
+        - mountPath: /run/nvidia
+          mountPropagation: HostToContainer
+          name: nvidia-mps-path
+        - mountPath: "/workspace/sharedVolume"
+          name: shared-volume
+      volumes:
+      - hostPath:
+          path: /run/nvidia
+          type: ""
+        name: nvidia-mps-path
+      - name: config-volume
+
+      volumes:
+      - name: model-repo
+        persistentVolumeClaim:
+          claimName: cv-model
